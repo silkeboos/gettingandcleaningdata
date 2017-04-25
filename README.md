@@ -1,1 +1,1 @@
-# gettingandcleaningdata
+# This file describes how the code works
