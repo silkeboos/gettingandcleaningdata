@@ -19,23 +19,25 @@ extractedFeatures.names <- gsub('[-()]', '',extractedFeatures.names)
 x_train <- read.table("UCI HAR Dataset/train/X_train.txt")[extractedFeatures]
 y_train <- read.table("UCI HAR Dataset/train/Y_train.txt")
 subject_train <- read.table("UCI HAR Dataset/train/subject_train.txt")
+# Create train-dataset
+train_data <- cbind( subject_train,y_train,x_train)
+
+
 
 x_test <- read.table("UCI HAR Dataset/test/X_test.txt")[extractedFeatures]
 y_test <- read.table("UCI HAR Dataset/test/Y_test.txt")
 subject_test <- read.table("UCI HAR Dataset/test/subject_test.txt")
-
 # Create test-dataset
-test_data <- cbind(x_test,y_test, subject_test)
+test_data <- cbind(subject_test,y_test,x_test)
 
-# Create train-dataset
-train_data <- cbind(x_train,y_train, subject_train)
+
 
 #Merging and labeling
 mergedData <- rbind(test_data,train_data)
 colnames(mergedData) <- c("subject","activity",extractedFeatures.names)
 
 #Turning of activities & subjects into factors
-mergedData$activity <- factor(mergedData$activity, levels = activityLabels[,2])
+mergedData$activity <- factor(mergedData$activity, levels = activityLabels[,1], labels = activityLabels[,2])
 mergedData$subject <- as.factor(mergedData$subject)
 
 mergedData.melted <- melt(mergedData, id =c("subject","activity"))
