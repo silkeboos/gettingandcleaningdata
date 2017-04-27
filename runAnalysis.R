@@ -19,20 +19,17 @@ extractedFeatures.names <- gsub('[-()]', '',extractedFeatures.names)
 x_train <- read.table("UCI HAR Dataset/train/X_train.txt")[extractedFeatures]
 y_train <- read.table("UCI HAR Dataset/train/Y_train.txt")
 subject_train <- read.table("UCI HAR Dataset/train/subject_train.txt")
+
 # Create train-dataset
 train_data <- cbind( subject_train,y_train,x_train)
-
-
-
 x_test <- read.table("UCI HAR Dataset/test/X_test.txt")[extractedFeatures]
 y_test <- read.table("UCI HAR Dataset/test/Y_test.txt")
 subject_test <- read.table("UCI HAR Dataset/test/subject_test.txt")
+
 # Create test-dataset
 test_data <- cbind(subject_test,y_test,x_test)
 
-
-
-#Merging and labeling
+#Merging and labeling ao test-dataset and train-dataset
 mergedData <- rbind(test_data,train_data)
 colnames(mergedData) <- c("subject","activity",extractedFeatures.names)
 
