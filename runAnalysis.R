@@ -36,11 +36,12 @@ test_data <- cbind(subject_test,y_test,x_test)
 mergedData <- rbind(test_data,train_data)
 colnames(mergedData) <- c("subject","activity",extractedFeatures.names)
 
-#Turning of activities & subjects into factors
+#Convert activities & subjects into factors
 mergedData$activity <- factor(mergedData$activity, levels = activityLabels[,1], labels = activityLabels[,2])
 mergedData$subject <- as.factor(mergedData$subject)
 
 mergedData.melted <- melt(mergedData, id =c("subject","activity"))
+# Calculate the mean of every measurement
 mergedData.mean <- dcast(mergedData.melted, subject + activity ~ variable, mean)
-
+#write tidy dataset
 write.table(mergedData.mean, "tidy.txt", row.names = FALSE, quote= FALSE)
